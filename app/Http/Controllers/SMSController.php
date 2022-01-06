@@ -18,7 +18,6 @@ class SMSController extends Controller
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        // Log::info($data_string);
         $curl_response= curl_exec($ch);
         curl_close($ch);
         return $curl_response;

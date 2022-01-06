@@ -17,7 +17,7 @@ class MPESAResponseController extends Controller
         // $data = json_decode($request->getContent());
         Log::info('confirmation hit');
         Log::info($request->all());
-        Players::Create(json_decode($request));
+        Players::Create($request->all());
 
         return "success";
     }

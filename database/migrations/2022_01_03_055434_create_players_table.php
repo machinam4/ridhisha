@@ -21,13 +21,13 @@ class CreatePlayersTable extends Migration
             $table->integer("TransAmount");
             $table->string("BusinessShortCode");
             $table->string("BillRefNumber");
-            $table->string("InvoiceNumber");
+            $table->string("InvoiceNumber")->nullable();
             $table->integer("OrgAccountBalance");
-            $table->string("ThirdPartyTransID");
+            $table->string("ThirdPartyTransID")->nullable();
             $table->string("MSISDN");
             $table->string("FirstName");
-            $table->string("MiddleName");
-            $table->string("LastName");
+            $table->string("MiddleName")->nullable();
+            $table->string("LastName")->nullable();
             $table->timestamps();
         });
     }
