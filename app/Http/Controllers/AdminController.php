@@ -57,6 +57,7 @@ class AdminController extends Controller
             'username'=>$request->input('username'),
             'key'=>$request->input('key'),
             'secret'=>$request->input('secret'),
+            'radio'=>$request->input('radio'),
             'passkey'=>$request->input('passkey'),
             'b2cPassword'=>$request->input('b2cPassword'),
             'created_by'=>Auth::user()->name,
