@@ -5,19 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class mpesa extends Model
+class Radio extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'shortcode',
         'name',
-        'username',
-        'key',
-        'secret',
-        'radio',
-        'passkey',
-        'b2cPassword',
-        'created_by',
+        'created_by'
     ];
 }

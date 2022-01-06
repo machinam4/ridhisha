@@ -23,6 +23,8 @@ Route::get('/players', [AdminController::class, 'players'])->name('players');
 Route::get('/sms', [AdminController::class, 'sms'])->name('sms');
 Route::get('/mpesa', [AdminController::class, 'mpesa'])->name('mpesa');
 Route::post('/addmpesacode', [AdminController::class, 'addCode'])->name('addCode');
+Route::get('/radio', [AdminController::class, 'radio'])->name('radio');
+Route::post('/addradio', [AdminController::class, 'addRadio'])->name('addRadio');
 
 Auth::routes();
 

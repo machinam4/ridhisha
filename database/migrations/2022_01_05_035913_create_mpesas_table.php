@@ -20,8 +20,10 @@ class CreateMpesasTable extends Migration
             $table->string('username');
             $table->string('key');
             $table->string('secret');
+            $table->string('radio');
             $table->string('passkey')->nullable();
             $table->string('b2cPassword')->nullable();
+            $table->string('created_by');
             $table->timestamps();
         });
     }

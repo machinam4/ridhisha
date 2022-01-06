@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap-icons/bootstrap-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/fontawesome/all.min.css') }}">
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.svg" type="image/x-icon') }}">
 
     <!-- Scripts -->
@@ -59,16 +60,23 @@
                                 <span>Players</span>
                             </a>
                         </li>
-                        <li class="sidebar-item  ">
-                            <a href="{{ Route('sms') }}" class='sidebar-link'>
-                                <i class="bi bi-chat-right-dots-fill"></i>
-                                <span>SMS</span>
-                            </a>
-                        </li>
-                        @if (Auth::user()->role != 'User')
+
+                        @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Developer')
+                            <li class="sidebar-item  ">
+                                <a href="{{ Route('sms') }}" class='sidebar-link'>
+                                    <i class="bi bi-chat-right-dots-fill"></i>
+                                    <span>SMS</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item  ">
+                                <a href="{{ Route('radio') }}" class='sidebar-link'>
+                                    <i class="bi bi-broadcast"></i>
+                                    <span>Radios</span>
+                                </a>
+                            </li>
                             <li class="sidebar-item  ">
                                 <a href="{{ Route('mpesa') }}" class='sidebar-link'>
-                                    <i class="bi bi-chat-right-dots-fill"></i>
+                                    <i class="bi bi-wallet-fill"></i>
                                     <span>MPESA</span>
                                 </a>
                             </li>
@@ -139,7 +147,7 @@
                                             </li>
                                             <li><a class="dropdown-item" href="{{ route('logout') }}"
                                                     onclick="event.preventDefault();
-                                                                                                        document.getElementById('logout-form').submit();"><i
+                                                                                                                                                document.getElementById('logout-form').submit();"><i
                                                         class="icon-mid bi bi-box-arrow-left me-2"></i>
                                                     {{ __('Logout') }}</a>
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"

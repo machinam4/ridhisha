@@ -58,7 +58,7 @@ class MPESAController extends Controller
     {
         $ch = curl_init($mpesa_url);
         curl_setopt($ch, CURLOPT_URL, $mpesa_url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer '. $this->generateAccessToken(), 'Content-Type: application/json']);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer '. $this->generateAccessToken1(), 'Content-Type: application/json']);
         $data_string = json_encode($curl_post_data, JSON_UNESCAPED_SLASHES);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
@@ -74,8 +74,8 @@ class MPESAController extends Controller
         $body = array(
             'ShortCode'=> env('MPESA_SHORTCODE'),
             'ResponseType'=> 'Completed',
-            'ConfirmationURL'=> env('MPESA_URL').'api/confirmation',
-            'ValidationURL'=> env('MPESA_URL').'api/validation'
+            'ConfirmationURL'=> url('').'/api/confirmation',
+            'ValidationURL'=> url('').'/api/validation'
         );   
         $mpesaUrl = env('MPESA_ENV') == 0 ? 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl' : 'https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl';
         $response=json_decode($this->sendRequest($mpesaUrl, $body));        
@@ -92,12 +92,12 @@ class MPESAController extends Controller
             'ShortCode'=>env('MPESA_SHORTCODE'),
         );
         $mpesaUrl = env('MPESA_ENV') == 0 ? 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate' : 'https://api.safaricom.co.ke/mpesa/c2b/v1/simulate';
-        $response=$this->sendRequest($mpesaUrl, $body);
+        $response=$this->sendRequest1($mpesaUrl, $body);
         $results= json_decode($response);
         return $results;
     }
 
-    // live
+    // live==========
 
     public function generateAccessToken($consumer_key, $consumer_secret)
     {
@@ -136,8 +136,8 @@ class MPESAController extends Controller
         $body = array(
             'ShortCode'=> $data['shortcode'],
             'ResponseType'=> 'Completed',
-            'ConfirmationURL'=> env('MPESA_URL').'api/confirmation',
-            'ValidationURL'=> env('MPESA_URL').'api/validation'
+            'ConfirmationURL'=> url('').'/api/confirmation',
+            'ValidationURL'=> url('').'/api/validation'
         );   
         $mpesaUrl = env('MPESA_ENV') == 0 ? 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl' : 'https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl';
         $response=json_decode($this->sendRequest($mpesaUrl, $body, $data['key'], $data['secret']));        

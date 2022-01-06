@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\mpesa;
+use App\Models\Radio;
 use App\Models\Players;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MPESAController;
 
 class AdminController extends Controller
@@ -16,13 +18,23 @@ class AdminController extends Controller
     }
 
     public function index(){
+        //if user is admin return all data
+        if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Developer') {
+            $players = Players::orderBy('TransTime', 'DESC')->limit(50)->get();
+            return view('admin.dashboard', ['players' => $players]);
+        // if user is radio station, return specific data
+        } else {
+            $radio = Auth::user()->role;
+            $shortcode=mpesa::where('radio', $radio)->first();
+            $shortcode=$shortcode['radio'];
+            $players = Players::orderBy('TransTime', 'DESC')->limit(50)->get();
 
-        $players = Players::orderBy('TransTime', 'DESC')->limit(50)->get();
-
-        return view('admin.dashboard', ['players' => $players]);
+            return view('admin.dashboard', ['players' => $players]);
+        }
     }
 
-    public function players(){
+    public function players(){  
+        $radio = Auth::user()->role;      
         $players = Players::orderBy('TransTime', 'DESC')->limit(50)->get();
         return view('admin.players', ['players' => $players]);
     }
@@ -34,8 +46,8 @@ class AdminController extends Controller
         return view('admin.sms', ['smss'=>$getsms]);
     }
     public function mpesa(){
-        $codes= mpesa::all();
-        return view('admin.mpesa', ['codes'=>$codes]);
+        $radios = Radio::get('name');
+        return view('admin.mpesa',['radios'=>$radios]);
     }
     public function addCode(Request $request)
     {
@@ -47,6 +59,7 @@ class AdminController extends Controller
             'secret'=>$request->input('secret'),
             'passkey'=>$request->input('passkey'),
             'b2cPassword'=>$request->input('b2cPassword'),
+            'created_by'=>Auth::user()->name,
         ]; 
         try {
             $MPESAController = new MPESAController;
@@ -60,6 +73,30 @@ class AdminController extends Controller
         }        
         return [
             'message' => 'success registering shortcode',
+            'type'=>'success'
+        ];
+    }
+
+    public function radio(){
+        $radios= Radio::all();
+        return view('admin.radio', ['radios'=>$radios]);
+    }
+    public function addRadio(Request $request)
+    {
+        $data = [
+            'name'=>$request->input('name'),
+            'created_by'=>Auth::user()->name,
+        ];
+        try {
+            Radio::create($data);
+        } catch (\Throwable $th) {
+            return [
+                'message' => 'error registering Radio, please confirm details provided',
+                'type'=>'error'
+            ];
+        }        
+        return [
+            'message' => 'success registering Radio',
             'type'=>'success'
         ];
     }
