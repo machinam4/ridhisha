@@ -21,22 +21,34 @@ class AdminController extends Controller
         //if user is admin return all data
         if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Developer') {
             $players = Players::orderBy('TransTime', 'DESC')->limit(50)->get();
-            return view('admin.dashboard', ['players' => $players]);
+            $totalAmount = Players::get()->sum('TransAmount');
+            return view('admin.dashboard', ['players' => $players, 'totalAmount'=>$totalAmount]);
         // if user is radio station, return specific data
         } else {
             $radio = Auth::user()->role;
             $shortcode=mpesa::where('radio', $radio)->first();
-            $shortcode=$shortcode['radio'];
-            $players = Players::orderBy('TransTime', 'DESC')->limit(50)->get();
-
-            return view('admin.dashboard', ['players' => $players]);
+            $shortcode=$shortcode['shortcode'];
+            $players = Players::where('BusinessShortCode', $shortcode)->limit(50)->get();
+            $totalAmount = Players::where('BusinessShortCode', $shortcode)->sum('TransAmount');
+            return view('admin.dashboard', ['players' => $players, 'totalAmount'=>$totalAmount]);
         }
     }
 
     public function players(){  
-        $radio = Auth::user()->role;      
-        $players = Players::orderBy('TransTime', 'DESC')->limit(50)->get();
-        return view('admin.players', ['players' => $players]);
+         //if user is admin return all data
+         if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Developer') {
+            $players = Players::get()->count();
+            $totalAmount = Players::get()->sum('TransAmount');
+            return view('admin.players', ['players' => $players, 'totalAmount'=>$totalAmount]);
+        // if user is radio station, return specific data
+        } else {
+            $radio = Auth::user()->role;
+            $shortcode=mpesa::where('radio', $radio)->first();
+            $shortcode=$shortcode['shortcode'];
+            $players = Players::where('BusinessShortCode', $shortcode)->get()->count();
+            $totalAmount = Players::where('BusinessShortCode', $shortcode)->sum('TransAmount');
+            return view('admin.players', ['players' => $players, 'totalAmount'=>$totalAmount]);
+        }
     }
 
     public function sms(){

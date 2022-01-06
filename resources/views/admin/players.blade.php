@@ -33,29 +33,30 @@
                                 </div>
                                 <div class="col-md-8">
                                     <h6 class="text-muted font-semibold">Total Players</h6>
-                                    <h6 class="font-extrabold mb-0" id="show_sms_name">show</h6>
+                                    <h6 class="font-extrabold mb-0" id="show_sms_name">{{ $players }}</h6>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {{-- <div class="col-6 col-lg-3 col-md-6">
-                <div class="card">
-                    <div class="card-body px-3 py-4-5">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="stats-icon blue">
-                                    <i class="iconly-boldProfile"></i>
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="stats-icon blue">
+                                        <i class="iconly-boldProfile"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-8">
-                                <h6 class="text-muted font-semibold"></h6>
-                                <h6 class="font-extrabold mb-0" id="show_sms_balance">0.00</h6>
+                                <div class="col-md-8">
+                                    <h6 class="text-muted font-semibold">Total Amount</h6>
+                                    <h6 class="font-extrabold mb-0" id="show_sms_balance">
+                                        {{ $totalAmount }}</h6>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> --}}
                 {{-- <div class="col-6 col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-body px-3 py-4-5">
@@ -98,30 +99,8 @@
     <section class="section">
         <div class="card">
             <div class="card-body">
-                <table class="table" id="players_table">
-                    <thead>
-                        <tr>
-                            <th>Names</th>
-                            <th>Phone</th>
-                            <th>Amount</th>
-                            <th>Trans Code</th>
-                            {{-- <th>Status</th> --}}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($players as $player)
-                            <tr>
-                                <td>{{ $player->FirstName . ' ' . $player->LastName }}</td>
-                                <td>{{ $player->TransAmount }}</td>
-                                <td>{{ $player->MSISDN }}</td>
-                                <td>{{ $player->BillRefNumber }}</td>
-                                {{-- <td>
-                                <span class="badge bg-success">Active</span>
-                            </td> --}}
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                {{-- live wire table --}}
+                @livewire('players-table')
             </div>
         </div>
 
@@ -134,6 +113,15 @@
     <script src="{{ asset('assets/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js') }}"></script>
     <script>
         // Jquery Datatable
-        let jquery_datatable = $("#players_table").DataTable()
+        let jquery_datatable = $("#players_table").DataTable({
+            "order": [
+                [0, "desc"]
+            ]
+        })
+        var intervalId = window.setInterval(function() {
+            /// call your function here
+            Livewire.emit('getPlayers')
+            console.log(123)
+        }, 5000);
     </script>
 @endsection

@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap-icons/bootstrap-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/fontawesome/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/iconly/bold.css') }}">
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.svg" type="image/x-icon') }}">
 
     <!-- Scripts -->
@@ -147,7 +148,7 @@
                                             </li>
                                             <li><a class="dropdown-item" href="{{ route('logout') }}"
                                                     onclick="event.preventDefault();
-                                                                                                                                                                document.getElementById('logout-form').submit();"><i
+                                                                                                                                                                    document.getElementById('logout-form').submit();"><i
                                                         class="icon-mid bi bi-box-arrow-left me-2"></i>
                                                     {{ __('Logout') }}</a>
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"

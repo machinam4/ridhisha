@@ -1,7 +1,6 @@
 @extends('layouts.base')
 @section('page_name', 'Dashboard')
 @section('pageCss')
-    <link rel="stylesheet" href="{{ asset('assets/vendors/iconly/bold.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/jquery-datatables/jquery.dataTables.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.css') }}">
     <style>
@@ -35,7 +34,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <h6 class="text-muted font-semibold">Total Amount</h6>
-                                        <h6 class="font-extrabold mb-0">Ksh 1120</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $totalAmount }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -52,13 +51,13 @@
                                     </div>
                                     <div class="col-md-8">
                                         <h6 class="text-muted font-semibold">Total Players</h6>
-                                        <h6 class="font-extrabold mb-0">183</h6>
+                                        <h6 class="font-extrabold mb-0">{{ count($players) }}</h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-lg-3 col-md-6">
+                    {{-- <div class="col-6 col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body px-3 py-4-5">
                                 <div class="row">
@@ -91,7 +90,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </section>
@@ -110,6 +109,7 @@
                     <thead>
                         <tr>
                             <th>Date</th>
+                            <th>Name</th>
                             <th>Amount</th>
                             {{-- <th>Status</th> --}}
                         </tr>
@@ -117,6 +117,7 @@
                     <tbody>
                         @foreach ($players as $player)
                             <tr>
+                                <td>{{ $player->TransTime }}</td>
                                 <td>{{ $player->FirstName . ' ' . $player->LastName }}</td>
                                 <td>{{ $player->TransAmount }}</td>
                                 {{-- <td>
@@ -139,6 +140,10 @@
     <script src="{{ asset('assets/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js') }}"></script>
     <script>
         // Jquery Datatable
-        let jquery_datatable = $("#players_table").DataTable()
+        let jquery_datatable = $("#players_table").DataTable({
+            "order": [
+                [0, "desc"]
+            ]
+        })
     </script>
 @endsection
