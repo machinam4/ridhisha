@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MPESAController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+// Route::get('/', function () {
+//     return view('admin.dashboard');
+// });
+Route::get('/', [AdminController::class, 'index'])->name('dashboard');
+Route::get('/players', [AdminController::class, 'players'])->name('players');
+Route::get('/sms', [AdminController::class, 'sms'])->name('sms');
+Route::get('/mpesa', [AdminController::class, 'mpesa'])->name('mpesa');
+Route::post('/addmpesacode', [AdminController::class, 'addCode'])->name('addCode');
+
+Auth::routes();
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+//mpesa routes
+Route::get('/transaction/token', [MPESAController::class, 'generateAccessToken'])->name('apptoken');
+// Route::get('/transaction/registerurl', [MPESAController::class, 'registerURL']);
+Route::get('/transaction/simulate', [MPESAController::class, 'simulateTransaction']);
