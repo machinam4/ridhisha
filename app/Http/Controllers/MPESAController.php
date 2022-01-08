@@ -136,8 +136,8 @@ class MPESAController extends Controller
         $body = array(
             'ShortCode'=> $data['shortcode'],
             'ResponseType'=> 'Completed',
-            'ConfirmationURL'=> url('').'/api/confirmation',
-            'ValidationURL'=> url('').'/api/validation'
+            'ConfirmationURL'=> url('').'/api/c2b/confirmation',
+            'ValidationURL'=> url('').'/api/c2b/validation'
         );   
         $mpesaUrl = env('MPESA_ENV') == 0 ? 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl' : 'https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl';
         $response=json_decode($this->sendRequest($mpesaUrl, $body, $data['key'], $data['secret']));        
