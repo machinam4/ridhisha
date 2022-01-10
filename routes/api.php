@@ -20,8 +20,8 @@ use App\Http\Controllers\MPESAResponseController;
 //     return $request->user();
 // });
 
-Route::post('/confirmation', [MPESAResponseController::class, 'confirmation']);
-Route::post('/validation', [MPESAResponseController::class, 'validation']);
+Route::post('/c2b/confirmation', [MPESAResponseController::class, 'confirmation']);
+Route::post('/c2b/validation', [MPESAResponseController::class, 'validation']);
 
 // sms responses
 Route::get('/sms/sms_stats', [SMSController::class, 'smsStats']);
