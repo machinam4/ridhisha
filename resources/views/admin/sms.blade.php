@@ -107,16 +107,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($smss as $sms)
+                        @if ($smss == '')
                             <tr>
-                                <td>{{ $sms->MobileNumber }}</td>
-                                <td>{{ $sms->DoneDate }}</td>
-                                <td>{{ $sms->Message }}</td>
-                                <td>
-                                    <span class="badge bg-success">{{ $sms->Status }}</span>
-                                </td>
+                                <td>No sms for the last 30 days</td>
                             </tr>
-                        @endforeach
+                        @else
+                            @foreach ($smss as $sms)
+                                <tr>
+                                    <td>{{ $sms->MobileNumber }}</td>
+                                    <td>{{ $sms->DoneDate }}</td>
+                                    <td>{{ $sms->Message }}</td>
+                                    <td>
+                                        <span class="badge bg-success">{{ $sms->Status }}</span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
