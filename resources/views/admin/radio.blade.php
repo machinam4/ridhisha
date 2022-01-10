@@ -1,5 +1,5 @@
 @extends('layouts.base')
-@section('page_name', 'MPESA')
+@section('page_name', 'RADIO')
 @section('pageCss')
     <link rel="stylesheet" href="{{ asset('assets/vendors/jquery-datatables/jquery.dataTables.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.css') }}">
@@ -43,6 +43,20 @@
                                     <label for="radio-vertical">Radio Station*</label>
                                     <input type="text" id="radio-vertical" class="form-control" name="name"
                                         placeholder="Radio Station*">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="payblii-vertical">Mpesa Paybill/Till No*</label>
+                                    <input type="text" id="payblii-vertical" class="form-control" name="shortcode"
+                                        placeholder="Mpesa Paybill/Till No*">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="store-vertical">Mpesa Store No.*</label>
+                                    <input type="text" id="store-vertical" class="form-control" name="store"
+                                        placeholder="Mpesa Store No.*">
                                 </div>
                             </div>
                         </div>

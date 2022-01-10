@@ -15,7 +15,6 @@ class mpesa extends Model
         'username',
         'key',
         'secret',
-        'radio',
         'passkey',
         'b2cPassword',
         'created_by',

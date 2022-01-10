@@ -60,16 +60,6 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <fieldset class="form-group">
-                                    <label for="basicSelect">Radio*</label>
-                                    <select class="form-select" id="basicSelect" name="radio">
-                                        @foreach ($radios as $radio)
-                                            <option value="{{ $radio['name'] }}">{{ $radio['name'] }}</option>
-                                        @endforeach
-                                    </select>
-                                </fieldset>
-                            </div>
-                            <div class="col-12">
                                 <div class="form-group">
                                     <label for="key-vertical">Consumer Key*</label>
                                     <input type="password" id="key-vertical" class="form-control" name="key"

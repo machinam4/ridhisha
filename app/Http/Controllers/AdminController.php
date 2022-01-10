@@ -26,7 +26,7 @@ class AdminController extends Controller
         // if user is radio station, return specific data
         } else {
             $radio = Auth::user()->role;
-            $shortcode=mpesa::where('radio', $radio)->first();
+            $shortcode=Radio::where('name', $radio)->first();
             $shortcode=$shortcode['shortcode'];
             $players = Players::where('BusinessShortCode', $shortcode)->limit(50)->get();
             $totalAmount = Players::where('BusinessShortCode', $shortcode)->sum('TransAmount');
@@ -43,7 +43,7 @@ class AdminController extends Controller
         // if user is radio station, return specific data
         } else {
             $radio = Auth::user()->role;
-            $shortcode=mpesa::where('radio', $radio)->first();
+            $shortcode=Radio::where('name', $radio)->first();
             $shortcode=$shortcode['shortcode'];
             $players = Players::where('BusinessShortCode', $shortcode)->get()->count();
             $totalAmount = Players::where('BusinessShortCode', $shortcode)->sum('TransAmount');
@@ -58,8 +58,7 @@ class AdminController extends Controller
         return view('admin.sms', ['smss'=>$getsms]);
     }
     public function mpesa(){
-        $radios = Radio::get('name');
-        return view('admin.mpesa',['radios'=>$radios]);
+        return view('admin.mpesa');
     }
     public function addCode(Request $request)
     {
@@ -69,7 +68,6 @@ class AdminController extends Controller
             'username'=>$request->input('username'),
             'key'=>$request->input('key'),
             'secret'=>$request->input('secret'),
-            'radio'=>$request->input('radio'),
             'passkey'=>$request->input('passkey'),
             'b2cPassword'=>$request->input('b2cPassword'),
             'created_by'=>Auth::user()->name,
@@ -98,6 +96,8 @@ class AdminController extends Controller
     {
         $data = [
             'name'=>$request->input('name'),
+            'shortcode'=>$request->input('shortcode'),
+            'store'=>$request->input('store'),
             'created_by'=>Auth::user()->name,
         ];
         try {

@@ -16,6 +16,8 @@ class CreateRadiosTable extends Migration
         Schema::create('radios', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->string('shortcode')->unique();
+            $table->string('store')->unique();
             $table->string('created_by');
             $table->timestamps();
         });

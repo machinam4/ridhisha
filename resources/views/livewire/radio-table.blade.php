@@ -5,6 +5,8 @@
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Short Code</th>
+                    <th>Store No.</th>
                     <th>Created By</th>
                 </tr>
             </thead>
@@ -12,6 +14,8 @@
                 @foreach ($radios as $radio)
                     <tr>
                         <td>{{ $radio->name }}</td>
+                        <td>{{ $radio->shortcode }}</td>
+                        <td>{{ $radio->store }}</td>
                         <td>{{ $radio->created_by }}</td>
                     </tr>
                 @endforeach

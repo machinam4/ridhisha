@@ -10,6 +10,8 @@ class Radio extends Model
     use HasFactory;
     protected $fillable = [
         'name',
+        'shortcode',
+        'store',
         'created_by'
     ];
 }
