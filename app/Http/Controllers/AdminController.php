@@ -74,7 +74,7 @@ class AdminController extends Controller
         ]; 
         try {
             $MPESAController = new MPESAController;
-            $MPESAController->registerUrl($data);
+            $registration = $MPESAController->generateAccessToken($data['key'], $data['secret']);
             mpesa::create($data);
         } catch (\Throwable $th) {
             return [
@@ -113,4 +113,17 @@ class AdminController extends Controller
             'type'=>'success'
         ];
     }
+    public function URLregister($id)
+    {
+        $code = mpesa::find($id);
+        $data = [
+            'shortcode'=>$code->shortcode,
+            'key'=>$code->key,
+            'secret'=>$code->secret,
+        ]; 
+        $MPESAController = new MPESAController;
+        $registration = $MPESAController->registerURL($data);
+
+        return $registration;
+}
 }

@@ -18,8 +18,10 @@
                     <td>{{ $code->username }}</td>
                     <td>{{ $code->created_at }}</td>
                     <td>
-                        <span class="badge bg-success">Active</span>
+                        <button type="button" class="btn btn-success" onclick="registerurl({{ $code->id }})">
+                            <span class="badge bg-success">Register Url</span></button>
                     </td>
+
                 </tr>
             @endforeach
         </tbody>

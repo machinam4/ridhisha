@@ -25,7 +25,7 @@ Route::get('/mpesa', [AdminController::class, 'mpesa'])->name('mpesa');
 Route::post('/addmpesacode', [AdminController::class, 'addCode'])->name('addCode');
 Route::get('/radio', [AdminController::class, 'radio'])->name('radio');
 Route::post('/addradio', [AdminController::class, 'addRadio'])->name('addRadio');
-
+Route::get('/registerurl/{id}', [AdminController::class, 'URLregister'])->name('registerurl');
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

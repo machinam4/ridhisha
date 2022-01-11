@@ -133,5 +133,30 @@
                 }
             });
         });
+
+        function registerurl(id) {
+            $.get('/registerurl/' + id, function(data) {
+                console.log(data)
+                Swal.fire({
+                    icon: data['type'],
+                    title: data.errorMessage
+                })
+                Livewire.emit('codeAdded')
+            })
+        }
+        // $("#register_button").click(function(e) {
+        //     e.preventDefault(); // avoid to execute the actual submit of the form.
+        //     var link = $(this);
+        //     var url = link.attr('href');
+        //     console.log(url)
+        //     $.get(url, function(data) {
+        //         console.log(data.errorMessage)
+        //         Swal.fire({
+        //             icon: data['type'],
+        //             title: data.errorMessage
+        //         })
+        //         Livewire.emit('codeAdded')
+        //     })
+        // });
     </script>
 @endsection
