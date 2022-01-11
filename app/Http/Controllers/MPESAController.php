@@ -140,6 +140,7 @@ class MPESAController extends Controller
             'ConfirmationURL'=> url('').'/api/c2b/confirmation',
             'ValidationURL'=> url('').'/api/c2b/validation'
         );  
+        Log::info($body);
         $mpesaUrl = env('MPESA_ENV') == 0 ? 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl' : 'https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl';
         $response=json_decode($this->sendRequest($mpesaUrl, $body, $data['key'], $data['secret']));   
         return $response;
