@@ -15,17 +15,17 @@ class CreatePlayersTable extends Migration
     {
         Schema::create('players', function (Blueprint $table) {
             $table->id();
-            $table->string("TransactionType");
-            $table->string("TransID");
-            $table->dateTime("TransTime");
-            $table->integer("TransAmount");
-            $table->string("BusinessShortCode");
-            $table->string("BillRefNumber");
+            $table->string("TransactionType")->nullable();
+            $table->string("TransID")->nullable();
+            $table->dateTime("TransTime")->nullable();
+            $table->integer("TransAmount")->nullable();
+            $table->string("BusinessShortCode")->nullable();
+            $table->string("BillRefNumber")->nullable();
             $table->string("InvoiceNumber")->nullable();
-            $table->integer("OrgAccountBalance");
+            $table->integer("OrgAccountBalance")->nullable();
             $table->string("ThirdPartyTransID")->nullable();
-            $table->string("MSISDN");
-            $table->string("FirstName");
+            $table->string("MSISDN")->nullable();
+            $table->string("FirstName")->nullable();
             $table->string("MiddleName")->nullable();
             $table->string("LastName")->nullable();
             $table->timestamps();
