@@ -16,7 +16,7 @@ class PlayersTable extends Component
         return ['getPlayers' => 'render'];
 
     }
-    public function render()
+    public function render() 
     {
         //if user is admin return all data
         if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Developer') {
@@ -25,7 +25,7 @@ class PlayersTable extends Component
         // if user is radio station, return specific data
         } else {
             $radio = Auth::user()->role;
-            $shortcode=mpesa::where('radio', $radio)->first();
+            $shortcode=Radio::where('name', $radio)->first();
             $shortcode=$shortcode['shortcode'];
             $players = Players::where('BusinessShortCode', $shortcode)->limit(50)->get();
             return view('livewire.players-table', ['players' => $players]);
