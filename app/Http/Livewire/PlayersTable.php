@@ -28,7 +28,7 @@ class PlayersTable extends Component
             $radio = Auth::user()->role;
             $shortcode=Radio::where('name', $radio)->first();
             $shortcode=$shortcode['shortcode'];
-            $players = Players::where('BusinessShortCode', $shortcode)->orderBy('TransTime', 'DESC')->limit(50)->get();
+            $players = Players::whereDate('created_at', date('YY-m-dd'))->where('BusinessShortCode', $shortcode)->orderBy('TransTime', 'DESC')->limit(50)->get();
             return view('livewire.players-table', ['players' => $players]);
         }
     }
