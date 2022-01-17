@@ -24,11 +24,11 @@ class AdminController extends Controller
             // $players = Players::orderBy('TransTime', 'DESC')->limit(50)->get();
             $players = Players::select(
                 DB::raw("(sum(TransAmount)) as TransAmount"),
-                DB::raw("(DATE_FORMAT(TransTime, '%d-%m-%Y')) as TransTime")
-                )->groupBy(DB::raw("DATE_FORMAT(TransTime, '%d-%m-%Y')"))->get();
+                DB::raw("(DATE_FORMAT(TransTime, '%d-%M-%Y')) as TransTime")
+                )->groupBy(DB::raw("DATE_FORMAT(TransTime, '%d-%M-%Y')"))->get();
             $totalAmount = Players::get()->sum('TransAmount');
             $totalToday = Players::whereDate('created_at', date('Y-m-d'))->sum('TransAmount');
-            return view('admin.dashboard', ['players' => $players, 'totalAmount'=>$totalAmount]);
+            return view('admin.dashboard', ['players' => $players, 'totalAmount'=>$totalAmount, 'totalToday'=>$totalToday]);
         // if user is radio station, return specific data
         } else {
             $radio = Auth::user()->role;
@@ -36,8 +36,8 @@ class AdminController extends Controller
             $shortcode=$shortcode['shortcode'];
             $players = Players::select(
                 DB::raw("(sum(TransAmount)) as TransAmount"),
-                DB::raw("(DATE_FORMAT(TransTime, '%d-%m-%Y')) as TransTime")
-                )->groupBy(DB::raw("DATE_FORMAT(TransTime, '%d-%m-%Y')"))->where('BusinessShortCode', $shortcode)->get();
+                DB::raw("(DATE_FORMAT(TransTime, '%d-%M-%Y')) as TransTime")
+                )->groupBy(DB::raw("DATE_FORMAT(TransTime, '%d-%M-%Y')"))->where('BusinessShortCode', $shortcode)->get();
             $totalToday = Players::whereDate('created_at', date('Y-m-d'))->where('BusinessShortCode', $shortcode)->sum('TransAmount');
             $totalAmount = Players::where('BusinessShortCode', $shortcode)->sum('TransAmount');
             return view('admin.dashboard', ['players' => $players, 'totalAmount'=>$totalAmount, 'totalToday'=>$totalToday]);
