@@ -33,8 +33,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">Total Amount</h6>
-                                        <h6 class="font-extrabold mb-0">{{ $totalAmount }}</h6>
+                                        <h6 class="text-muted font-semibold">Total Today</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $totalToday }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -50,14 +50,14 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">Total Players</h6>
+                                        <h6 class="text-muted font-semibold">Total Days</h6>
                                         <h6 class="font-extrabold mb-0">{{ count($players) }}</h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="col-6 col-lg-3 col-md-6">
+                    <div class="col-6 col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body px-3 py-4-5">
                                 <div class="row">
@@ -67,14 +67,14 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8">
-                                        <h6 class="text-muted font-semibold">New Players</h6>
-                                        <h6 class="font-extrabold mb-0">8</h6>
+                                        <h6 class="text-muted font-semibold">Total Overall</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $totalAmount }}</h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-lg-3 col-md-6">
+                    {{-- <div class="col-6 col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body px-3 py-4-5">
                                 <div class="row">
@@ -109,7 +109,6 @@
                     <thead>
                         <tr>
                             <th>Date</th>
-                            <th>Name</th>
                             <th>Amount</th>
                             {{-- <th>Status</th> --}}
                         </tr>
@@ -118,7 +117,6 @@
                         @foreach ($players as $player)
                             <tr>
                                 <td>{{ $player->TransTime }}</td>
-                                <td>{{ $player->FirstName . ' ' . $player->LastName }}</td>
                                 <td>{{ $player->TransAmount }}</td>
                                 {{-- <td>
                                 <span class="badge bg-success">Active</span>

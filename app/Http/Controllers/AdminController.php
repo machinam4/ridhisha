@@ -6,6 +6,7 @@ use App\Models\mpesa;
 use App\Models\Radio;
 use App\Models\Players;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MPESAController;
 
@@ -20,17 +21,26 @@ class AdminController extends Controller
     public function index(){
         //if user is admin return all data
         if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Developer') {
-            $players = Players::orderBy('TransTime', 'DESC')->limit(50)->get();
+            // $players = Players::orderBy('TransTime', 'DESC')->limit(50)->get();
+            $players = Players::select(
+                DB::raw("(sum(TransAmount)) as TransAmount"),
+                DB::raw("(DATE_FORMAT(TransTime, '%d-%m-%Y')) as TransTime")
+                )->groupBy(DB::raw("DATE_FORMAT(TransTime, '%d-%m-%Y')"))->get();
             $totalAmount = Players::get()->sum('TransAmount');
+            $totalToday = Players::whereDate('created_at', date('Y-m-d'))->sum('TransAmount');
             return view('admin.dashboard', ['players' => $players, 'totalAmount'=>$totalAmount]);
         // if user is radio station, return specific data
         } else {
             $radio = Auth::user()->role;
             $shortcode=Radio::where('name', $radio)->first();
             $shortcode=$shortcode['shortcode'];
-            $players = Players::where('BusinessShortCode', $shortcode)->limit(50)->get();
+            $players = Players::select(
+                DB::raw("(sum(TransAmount)) as TransAmount"),
+                DB::raw("(DATE_FORMAT(TransTime, '%d-%m-%Y')) as TransTime")
+                )->groupBy(DB::raw("DATE_FORMAT(TransTime, '%d-%m-%Y')"))->where('BusinessShortCode', $shortcode)->get();
+            $totalToday = Players::whereDate('created_at', date('Y-m-d'))->where('BusinessShortCode', $shortcode)->sum('TransAmount');
             $totalAmount = Players::where('BusinessShortCode', $shortcode)->sum('TransAmount');
-            return view('admin.dashboard', ['players' => $players, 'totalAmount'=>$totalAmount]);
+            return view('admin.dashboard', ['players' => $players, 'totalAmount'=>$totalAmount, 'totalToday'=>$totalToday]);
         }
     }
 
@@ -45,8 +55,8 @@ class AdminController extends Controller
             $radio = Auth::user()->role;
             $shortcode=Radio::where('name', $radio)->first();
             $shortcode=$shortcode['shortcode'];
-            $players = Players::where('BusinessShortCode', $shortcode)->get()->count();
-            $totalAmount = Players::where('BusinessShortCode', $shortcode)->sum('TransAmount');
+            $players = Players::whereDate('created_at', date('Y-m-d'))->where('BusinessShortCode', $shortcode)->get()->count();
+            $totalAmount = Players::whereDate('created_at', date('Y-m-d'))->where('BusinessShortCode', $shortcode)->sum('TransAmount');
             return view('admin.players', ['players' => $players, 'totalAmount'=>$totalAmount]);
         }
     }
