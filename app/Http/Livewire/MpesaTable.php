@@ -16,8 +16,14 @@ class MpesaTable extends Component
     }
     public function render()
     {
+        //if user is admin return all data
+        if (Auth::user()->role == 'Jamii') {
+        $players = Players::where('BusinessShortCode', '7296354')->orderBy('TransTime', 'DESC')->limit(50)->get();
+        return view('livewire.players-table', ['players' => $players]);
+        }else{
         $codes= mpesa::all();
         return view('livewire.mpesa-table',  ['codes'=>$codes]);
+        }
     }
 }
  

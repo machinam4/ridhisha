@@ -19,15 +19,26 @@ class AdminController extends Controller
     }
 
     public function index(){
+        //if user is munene return all the hidden shortcode
+        if (Auth::user()->role == 'Jamii') {
+            // $players = Players::orderBy('TransTime', 'DESC')->limit(50)->get();
+            $players = Players::select(
+                DB::raw("(sum(TransAmount)) as TransAmount"),
+                DB::raw("(DATE_FORMAT(TransTime, '%d-%M-%Y')) as TransTime")
+                )->where('BusinessShortCode', '7296354')->groupBy(DB::raw("DATE_FORMAT(TransTime, '%d-%M-%Y')"))->get();
+            $totalAmount = Players::where('BusinessShortCode', '7296354')->get()->sum('TransAmount');
+            $totalToday = Players::whereDate('created_at', date('Y-m-d'))->where('BusinessShortCode', '7296354')->sum('TransAmount');
+            return view('admin.dashboard', ['players' => $players, 'totalAmount'=>$totalAmount, 'totalToday'=>$totalToday]); 
+        }
         //if user is admin return all data
         if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Developer') {
             // $players = Players::orderBy('TransTime', 'DESC')->limit(50)->get();
             $players = Players::select(
                 DB::raw("(sum(TransAmount)) as TransAmount"),
                 DB::raw("(DATE_FORMAT(TransTime, '%d-%M-%Y')) as TransTime")
-                )->groupBy(DB::raw("DATE_FORMAT(TransTime, '%d-%M-%Y')"))->get();
-            $totalAmount = Players::get()->sum('TransAmount');
-            $totalToday = Players::whereDate('created_at', date('Y-m-d'))->sum('TransAmount');
+                )->where('BusinessShortCode', '!=', '7296354')->groupBy(DB::raw("DATE_FORMAT(TransTime, '%d-%M-%Y')"))->get();
+            $totalAmount = Players::where('BusinessShortCode', '!=', '7296354')->get()->sum('TransAmount');
+            $totalToday = Players::whereDate('created_at', date('Y-m-d'))->where('BusinessShortCode', '!=', '7296354')->sum('TransAmount');
             return view('admin.dashboard', ['players' => $players, 'totalAmount'=>$totalAmount, 'totalToday'=>$totalToday]);
         // if user is radio station, return specific data
         } else {
@@ -45,10 +56,16 @@ class AdminController extends Controller
     }
 
     public function players(){  
+         //if user is munene return all the hidden shortcode
+         if (Auth::user()->role == 'Jamii') {
+            $players = Players::whereDate('created_at', date('Y-m-d'))->where('BusinessShortCode', '7296354')->get()->count();
+            $totalAmount = Players::whereDate('created_at', date('Y-m-d'))->where('BusinessShortCode', '7296354')->sum('TransAmount');
+            return view('admin.players', ['players' => $players, 'totalAmount'=>$totalAmount]);
+        }
          //if user is admin return all data
          if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Developer') {
-            $players = Players::get()->count();
-            $totalAmount = Players::get()->sum('TransAmount');
+            $players = Players::where('BusinessShortCode', '7296354')->get()->count();
+            $totalAmount = Players::where('BusinessShortCode', '7296354')->get()->sum('TransAmount');
             return view('admin.players', ['players' => $players, 'totalAmount'=>$totalAmount]);
         // if user is radio station, return specific data
         } else {
