@@ -27,7 +27,7 @@ class AdminController extends Controller
                 DB::raw("(DATE_FORMAT(TransTime, '%d-%M-%Y')) as TransTime")
                 )->where('BusinessShortCode', '7296354')->groupBy(DB::raw("DATE_FORMAT(TransTime, '%d-%M-%Y')"))->get();
             $totalAmount = Players::where('BusinessShortCode', '7296354')->get()->sum('TransAmount');
-            $totalToday = Players::whereDate('created_at', date('Y-m-d'))->where('BusinessShortCode', '7296354')->sum('TransAmount');
+            $totalToday = Players::where('BusinessShortCode', '7296354')->whereDate('TransTime', date('Y-m-d'))->sum('TransAmount');
             return view('admin.dashboard', ['players' => $players, 'totalAmount'=>$totalAmount, 'totalToday'=>$totalToday]); 
         }
         //if user is admin return all data
@@ -38,7 +38,7 @@ class AdminController extends Controller
                 DB::raw("(DATE_FORMAT(TransTime, '%d-%M-%Y')) as TransTime")
                 )->where('BusinessShortCode', '!=', '7296354')->groupBy(DB::raw("DATE_FORMAT(TransTime, '%d-%M-%Y')"))->get();
             $totalAmount = Players::where('BusinessShortCode', '!=', '7296354')->get()->sum('TransAmount');
-            $totalToday = Players::whereDate('created_at', date('Y-m-d'))->where('BusinessShortCode', '!=', '7296354')->sum('TransAmount');
+            $totalToday = Players::where('BusinessShortCode', '!=', '7296354')->whereDate('TransTime', date('Y-m-d'))->sum('TransAmount');
             return view('admin.dashboard', ['players' => $players, 'totalAmount'=>$totalAmount, 'totalToday'=>$totalToday]);
         // if user is radio station, return specific data
         } else {
@@ -49,7 +49,7 @@ class AdminController extends Controller
                 DB::raw("(sum(TransAmount)) as TransAmount"),
                 DB::raw("(DATE_FORMAT(TransTime, '%d-%M-%Y')) as TransTime")
                 )->groupBy(DB::raw("DATE_FORMAT(TransTime, '%d-%M-%Y')"))->where('BusinessShortCode', $shortcode)->get();
-            $totalToday = Players::whereDate('created_at', date('Y-m-d'))->where('BusinessShortCode', $shortcode)->sum('TransAmount');
+            $totalToday = Players::whereDate('TransTime', date('Y-m-d'))->where('BusinessShortCode', $shortcode)->sum('TransAmount');
             $totalAmount = Players::where('BusinessShortCode', $shortcode)->sum('TransAmount');
             return view('admin.dashboard', ['players' => $players, 'totalAmount'=>$totalAmount, 'totalToday'=>$totalToday]);
         }
@@ -58,8 +58,8 @@ class AdminController extends Controller
     public function players(){  
          //if user is munene return all the hidden shortcode
          if (Auth::user()->role == 'Jamii') {
-            $players = Players::whereDate('created_at', date('Y-m-d'))->where('BusinessShortCode', '7296354')->get()->count();
-            $totalAmount = Players::whereDate('created_at', date('Y-m-d'))->where('BusinessShortCode', '7296354')->sum('TransAmount');
+            $players = Players::whereDate('TransTime', date('Y-m-d'))->where('BusinessShortCode', '7296354')->get()->count();
+            $totalAmount = Players::whereDate('TransTime', date('Y-m-d'))->where('BusinessShortCode', '7296354')->sum('TransAmount');
             return view('admin.players', ['players' => $players, 'totalAmount'=>$totalAmount]);
         }
          //if user is admin return all data
@@ -72,8 +72,8 @@ class AdminController extends Controller
             $radio = Auth::user()->role;
             $shortcode=Radio::where('name', $radio)->first();
             $shortcode=$shortcode['shortcode'];
-            $players = Players::whereDate('created_at', date('Y-m-d'))->where('BusinessShortCode', $shortcode)->get()->count();
-            $totalAmount = Players::whereDate('created_at', date('Y-m-d'))->where('BusinessShortCode', $shortcode)->sum('TransAmount');
+            $players = Players::whereDate('TransTime', date('Y-m-d'))->where('BusinessShortCode', $shortcode)->get()->count();
+            $totalAmount = Players::whereDate('TransTime', date('Y-m-d'))->where('BusinessShortCode', $shortcode)->sum('TransAmount');
             return view('admin.players', ['players' => $players, 'totalAmount'=>$totalAmount]);
         }
     }
