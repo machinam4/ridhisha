@@ -21,7 +21,7 @@ class PlayersTable extends Component
     {
         //if user is admin return all data
         if (Auth::user()->role == 'Jamii') {
-            $players = Players::where('BusinessShortCode', '7296354')->orderBy('TransTime', 'DESC')->limit(50)->get();
+            $players = Players::whereDate('TransTime', date('Y-m-d'))->where('BusinessShortCode', '7296354')->orderBy('TransTime', 'DESC')->limit(50)->get();
             return view('livewire.players-table', ['players' => $players]);
         }
         //if user is admin return all data
