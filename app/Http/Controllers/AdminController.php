@@ -28,7 +28,7 @@ class AdminController extends Controller
                 )->where('BusinessShortCode', '7296354')->groupBy(DB::raw("DATE_FORMAT(TransTime, '%d-%M-%Y')"))->get();
             // $totalAmount = Players::where('BusinessShortCode', '7296354')->get()->sum('TransAmount');
             $totalToday = Players::where('BusinessShortCode', '7296354')->whereDate('TransTime', date('Y-m-d'))->sum('TransAmount');
-            return view('admin.dashboard', ['players' => $players, 'totalAmount'=>$totalAmount, 'totalToday'=>$totalToday]); 
+            return view('admin.dashboard', ['players' => $players, 'totalToday'=>$totalToday]); 
         }
         //if user is admin return all data
         if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Developer') {
@@ -51,7 +51,7 @@ class AdminController extends Controller
                 )->groupBy(DB::raw("DATE_FORMAT(TransTime, '%d-%M-%Y')"))->where('BusinessShortCode', $shortcode)->get();
             $totalToday = Players::whereDate('TransTime', date('Y-m-d'))->where('BusinessShortCode', $shortcode)->sum('TransAmount');
             // $totalAmount = Players::where('BusinessShortCode', $shortcode)->sum('TransAmount');
-            return view('admin.dashboard', ['players' => $players, 'totalAmount'=>$totalAmount, 'totalToday'=>$totalToday]);
+            return view('admin.dashboard', ['players' => $players, 'totalToday'=>$totalToday]);
         }
     }
 
