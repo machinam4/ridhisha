@@ -15,16 +15,16 @@ class MPESAResponseController extends Controller
     public function confirmation(Request $request)
     {
         // $data = json_decode($request->getContent());
-        Log::info('confirmation hit');
-        Log::info($request->all());
+        // Log::info('confirmation hit');
+        // Log::info($request->all());
         Players::Create($request->all());
 
         return "success";
     }
     public function validation(Request $request)
     {
-        Log::info('validation hit');
-        Log::info($request->all());       
+        // Log::info('validation hit');
+        // Log::info($request->all());       
         return  [
                 "ResultCode"=> 0,
                 "ResultDesc"=> "Accept Service"
