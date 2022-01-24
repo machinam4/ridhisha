@@ -65,7 +65,7 @@ class AdminController extends Controller
          //if user is admin return all data
          if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Developer') {
             $players = Players::where('BusinessShortCode', '7296354')->get()->count();
-            // $totalAmount = Players::where('BusinessShortCode', '7296354')->get()->sum('TransAmount');
+            $totalAmount = Players::where('BusinessShortCode', '7296354')->get()->sum('TransAmount');
             return view('admin.players', ['players' => $players]);
         // if user is radio station, return specific data
         } else {
