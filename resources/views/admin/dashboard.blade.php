@@ -40,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-lg-3 col-md-6">
+                    {{-- <div class="col-6 col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body px-3 py-4-5">
                                 <div class="row">
@@ -56,8 +56,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Developer')
+                    </div> --}}
+                    {{-- @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Developer')
                         <div class="col-6 col-lg-3 col-md-6">
                             <div class="card">
                                 <div class="card-body px-3 py-4-5">
@@ -75,7 +75,7 @@
                                 </div>
                             </div>
                         </div>
-                    @endif
+                    @endif --}}
                     {{-- <div class="col-6 col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body px-3 py-4-5">

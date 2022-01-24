@@ -37,9 +37,9 @@ class AdminController extends Controller
                 DB::raw("(sum(TransAmount)) as TransAmount"),
                 DB::raw("(DATE_FORMAT(TransTime, '%d-%M-%Y')) as TransTime")
                 )->where('BusinessShortCode', '!=', '7296354')->groupBy(DB::raw("DATE_FORMAT(TransTime, '%d-%M-%Y')"))->get();
-            $totalAmount = Players::where('BusinessShortCode', '!=', '7296354')->get()->sum('TransAmount');
+            // $totalAmount = Players::where('BusinessShortCode', '!=', '7296354')->get()->sum('TransAmount');
             $totalToday = Players::where('BusinessShortCode', '!=', '7296354')->whereDate('TransTime', date('Y-m-d'))->sum('TransAmount');
-            return view('admin.dashboard', ['players' => $players, 'totalAmount'=>$totalAmount, 'totalToday'=>$totalToday]);
+            return view('admin.dashboard', ['players' => $players, 'totalToday'=>$totalToday]);
         // if user is radio station, return specific data
         } else {
             $radio = Auth::user()->role;
@@ -65,8 +65,8 @@ class AdminController extends Controller
          //if user is admin return all data
          if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Developer') {
             $players = Players::where('BusinessShortCode', '7296354')->get()->count();
-            $totalAmount = Players::where('BusinessShortCode', '7296354')->get()->sum('TransAmount');
-            return view('admin.players', ['players' => $players, 'totalAmount'=>$totalAmount]);
+            // $totalAmount = Players::where('BusinessShortCode', '7296354')->get()->sum('TransAmount');
+            return view('admin.players', ['players' => $players]);
         // if user is radio station, return specific data
         } else {
             $radio = Auth::user()->role;
