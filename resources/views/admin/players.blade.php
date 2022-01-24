@@ -121,7 +121,7 @@
         var intervalId = window.setInterval(function() {
             /// call your function here
             Livewire.emit('getPlayers')
-            console.log(123)
-        }, 5000);
+            // console.log(123)
+        }, 10000);
     </script>
 @endsection
