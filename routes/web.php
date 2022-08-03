@@ -21,6 +21,7 @@ use App\Http\Controllers\MPESAController;
 Route::get('/', [AdminController::class, 'index'])->name('dashboard');
 Route::get('/players', [AdminController::class, 'players'])->name('players');
 Route::get('/sms', [AdminController::class, 'sms'])->name('sms');
+Route::post('/sendSMS', [AdminController::class, 'sendSMS'])->name('sendSMS');
 Route::get('/mpesa', [AdminController::class, 'mpesa'])->name('mpesa');
 Route::post('/addmpesacode', [AdminController::class, 'addCode'])->name('addCode');
 Route::get('/radio', [AdminController::class, 'radio'])->name('radio');
