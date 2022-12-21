@@ -61,6 +61,12 @@
                                 <span>Players</span>
                             </a>
                         </li>
+                        <li class="sidebar-item  ">
+                            <a href="{{ Route('winners') }}" class='sidebar-link'>
+                                <i class="bi bi-people-fill"></i>
+                                <span>Winners</span>
+                            </a>
+                        </li>
 
                         @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Developer')
                             <li class="sidebar-item  ">

@@ -63,21 +63,21 @@ class AdminController extends Controller
     {
         //if user is munene return all the hidden shortcode
         if (Auth::user()->role == 'Jamii') {
-            $players = Players::whereDate('TransTime', date('Y-m-d'))->where('BusinessShortCode', '7296354')->get()->count();
+            $players = Players::whereDate('TransTime', date('Y-m-d'))->where('BusinessShortCode', '7296354')->count();
             $totalAmount = Players::whereDate('TransTime', date('Y-m-d'))->where('BusinessShortCode', '7296354')->sum('TransAmount');
             return view('admin.players', ['players' => $players, 'totalAmount' => $totalAmount]);
         }
         //if user is admin return all data
         if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Developer') {
-            $players = Players::where('BusinessShortCode', '7296354')->get()->count();
-            $totalAmount = Players::where('BusinessShortCode', '7296354')->get()->sum('TransAmount');
+            $players = Players::where('BusinessShortCode', '7296354')->count();
+            $totalAmount = Players::where('BusinessShortCode', '7296354')->sum('TransAmount');
             return view('admin.players', ['players' => $players]);
             // if user is radio station, return specific data
         } else {
             $radio = Auth::user()->role;
             $shortcode = Radio::where('name', $radio)->first();
             $shortcode = $shortcode['shortcode'];
-            $players = Players::whereDate('TransTime', date('Y-m-d'))->where('BusinessShortCode', $shortcode)->get()->count();
+            $players = Players::whereDate('TransTime', date('Y-m-d'))->where('BusinessShortCode', $shortcode)->count();
             $totalAmount = Players::whereDate('TransTime', date('Y-m-d'))->where('BusinessShortCode', $shortcode)->sum('TransAmount');
             return view('admin.players', ['players' => $players, 'totalAmount' => $totalAmount]);
         }
@@ -218,5 +218,18 @@ class AdminController extends Controller
         // return $Data;
         $response = Http::post('https://userapi.helomobile.co.ke/api/v2/SendBulkSMS', $Data);
         return  $response->body();
+    }
+
+    public function winners(Request $request)
+    {
+        // select player in the current month with most count
+        $radio = Auth::user()->role;
+        $shortcode = Radio::where('name', $radio)->first();
+        $shortcode = $shortcode['shortcode'];
+        $players = Players::whereMonth('TransTime', date('m'))->where('BusinessShortCode', $shortcode)->count();
+        // $players = Players::whereMonth('TransTime', date('m'))->count();
+        // if player in winners table reselect in db
+        dd($players);
+        // If 
     }
 }
