@@ -37,3 +37,5 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/transaction/token', [MPESAController::class, 'generateAccessToken'])->name('apptoken');
 // Route::get('/transaction/registerurl', [MPESAController::class, 'registerURL']);
 Route::get('/transaction/simulate', [MPESAController::class, 'simulateTransaction']);
+
+Route::post('/filter', [AdminController::class, 'filter'])->name('filter');

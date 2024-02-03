@@ -12,7 +12,6 @@
         .fontawesome-icons .the-icon svg {
             font-size: 24px;
         }
-
     </style>
 @endsection
 @section('contents')
@@ -95,6 +94,57 @@
         </div>
     </section>
 
+    <button type="button" class="btn btn-outline-primary block mb-5" data-bs-toggle="modal" data-bs-target="#addCodeModal">
+        FILTER RECORDS
+    </button>
+    <!-- Vertically Centered modal Modal -->
+    <div class="modal fade" id="addCodeModal" tabindex="-1" role="dialog" aria-labelledby="addCodeModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCodeModalTitle">SELECT DATES
+                    </h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+                <form action="{{ Route('filter') }}" method="post" id="radioForm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="radio-vertical">From Date*</label>
+                                    <input type="datetime-local" id="radio-vertical" class="form-control" name="from_date"
+                                        placeholder="From Date*" max="{{ now()->format('Y-m-d\TH:i:s') }}">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="payblii-vertical">To Date*</label>
+                                    <input type="datetime-local" id="payblii-vertical" class="form-control" name="to_date"
+                                        placeholder="To Date*" min="{{ now()->format('Y-m-d\TH:i:s') }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Cancel</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary ml-1">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Filter</span>
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
     <!-- Basic Tables start -->
     <section class="section">
         <div class="card">
@@ -123,5 +173,15 @@
             Livewire.emit('getPlayers')
             // console.log(123)
         }, 10000);
+    </script>
+    <script>
+        // Add event listener to "From Date" input
+        document.getElementById('radio-vertical').addEventListener('change', function() {
+            // Get the selected "From Date" value
+            var fromDateValue = this.value;
+
+            // Set the "To Date" input's min attribute to the selected "From Date" value
+            document.getElementById('payblii-vertical').min = fromDateValue;
+        });
     </script>
 @endsection

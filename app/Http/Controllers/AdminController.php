@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Http\Controllers\MPESAController;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -231,5 +232,24 @@ class AdminController extends Controller
         // if player in winners table reselect in db
         dd($players);
         // If 
+    }
+    public function filter(Request $request)
+    {
+
+
+        $from_date = Carbon::parse($request->from_date);
+        $to_date = Carbon::parse($request->to_date);
+        // dd($from_date);
+        $radio = Auth::user()->role;
+        $shortcode = Radio::where('name', $radio)->first();
+        $shortcode = $shortcode['shortcode'];
+        $players = Players::where('TransTime', '>=', $from_date)->where('TransTime', '<=', $to_date)->where('BusinessShortCode', $shortcode)->get();
+        $totalPlayers = $players->count();
+        $totalAmount = $players->sum('TransAmount');
+        // dd(['players' => $players, 'totalPlayers' => $totalPlayers, 'totalAmount' => $totalAmount]);
+        return view('admin.filters', [
+            'players' => $players, 'totalPlayers' => $totalPlayers, 'totalAmount' => $totalAmount, "fromDate" => $from_date,
+            "toDate" => $to_date
+        ]);
     }
 }

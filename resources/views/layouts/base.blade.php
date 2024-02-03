@@ -41,7 +41,8 @@
                             {{-- <a href="index.html"><img src="assets/images/logo/logo.png" alt="Logo" srcset=""></a> --}}
                         </div>
                         <div class="toggler">
-                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                            <a href="#" class="sidebar-hide d-xl-none d-block"><i
+                                    class="bi bi-x bi-middle"></i></a>
                         </div>
                     </div>
                 </div>
@@ -61,12 +62,12 @@
                                 <span>Players</span>
                             </a>
                         </li>
-                        <li class="sidebar-item  ">
+                        {{-- <li class="sidebar-item  ">
                             <a href="{{ Route('winners') }}" class='sidebar-link'>
                                 <i class="bi bi-people-fill"></i>
                                 <span>Winners</span>
                             </a>
-                        </li>
+                        </li> --}}
 
                         @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Developer')
                             <li class="sidebar-item  ">
@@ -117,8 +118,7 @@
 
                                 @if (Route::has('register'))
                                     <li class="nav-item">
-                                        <a class="nav-link"
-                                            href="{{ route('register') }}">{{ __('Register') }}</a>
+                                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                     </li>
                                 @endif
                             @else
@@ -182,8 +182,7 @@
                             <p>{{ date('Y') }} &copy; {{ str_replace('_', ' ', $appName) }}</p>
                         </div>
                         <div class="float-end">
-                            <p>Crafted with <span class="text-danger"><i
-                                        class="bi bi-heart-fill icon-mid"></i></span>
+                            <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
                                 by <a href="https://evoton.co.ke">Evoton</a></p>
                         </div>
                     </div>
